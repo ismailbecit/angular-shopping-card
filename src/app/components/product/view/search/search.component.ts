@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IProduct, IRootObject } from '../../models/product';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-search',
@@ -11,14 +13,15 @@ export class SearchComponent {
   text = ""
   @Output() newFilterCard: EventEmitter<string> = new EventEmitter<string>()
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private productService: ProductService
+
+  ) {
 
   }
-  searchProduct = async (data: string) => {
-    await this.http.get(`https://dummyjson.com/products/search?q=${data}`).subscribe((res: any) => {
-      this.newFilterCard.emit(res.products)
+  getProduct(name: string): void {
+    this.productService.getProduct(name).subscribe((res: IRootObject) => {
+      this.newFilterCard.emit(res.products as any)
     })
-
   }
-
 }

@@ -1,26 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { IProduct, IRootObject } from './models/product';
+import { ProductService } from './services/product.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
-  products = []
+  products!: IProduct[]
   name = ""
+  constructor(
+    private productService: ProductService
+  ) { }
+  ngOnInit(): void {
+    this.getProducts()
+  }
   updateFilter(event: any) {
-    console.log("geldiii", event)
     this.products = event
   }
-  ngOnInit() {
-    this.http.get("https://dummyjson.com/products").subscribe((res: any) => {
+
+
+
+  getProducts(): void {
+    this.productService.getProducts().subscribe((res: IRootObject) => {
       this.products = res.products
     })
   }
-
-  constructor(private http: HttpClient) {
-
-  }
-
 }

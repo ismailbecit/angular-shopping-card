@@ -10,8 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './components/home/home.component';
 import { ProductComponent } from './components/product/product.component';
 import { MatCardModule } from '@angular/material/card';
-import { SearchComponent } from './components/product/search/search.component';
-import { CardComponent } from './components/product/card/card.component';
+import { SearchComponent } from './components/product/view/search/search.component';
+import { CardComponent } from './components/product/view/card/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -32,9 +32,14 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatCardModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: "apiUrl",
+      useValue: "https://dummyjson.com"
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
